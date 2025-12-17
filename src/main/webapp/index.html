@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bank with bootstrap</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <style>
+        .hero-bank {
+            min-height: 90vh;
+            background: linear-gradient(135deg, #1f4068, #162447);
+        }
+        .bank-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .bank-logo {
+            font-size: 4rem;
+            color: #1f4068;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <div class="container-fluid hero-bank d-flex align-items-center justify-content-center">
+            <div class="col-lg-6 mx-auto p-5 bank-card text-center">
+
+                <i class="bi bi-bank2 bank-logo mb-3" aria-hidden="true"></i>
+                <h1 class="display-3 fw-bold mb-2 text-dark">Calamot Bank</h1>
+                <p class="fs-5 mb-5 text-muted">
+                    Su plataforma financiera segura.
+                </p>
+
+                <!-- Botones de Acción -->
+                <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+
+                    <!-- Iniciar Sesión (Acceso) -->
+                    <a href="login.html" class="btn btn-primary btn-lg px-5 py-3">
+                        <i class="bi bi-shield-lock-fill me-2"></i> Iniciar Sesión
+                    </a>
+
+                    <!-- Registrarse (Lleva al JSP de registro) -->
+                    <a href="Registre.jsp" class="btn btn-outline-success btn-lg px-5 py-3">
+                        <i class="bi bi-person-plus me-2"></i> Crear Cuenta
+                    </a>
+                </div>
+
+                <p class="mt-5 text-muted"><small>Acceso seguro garantizado.</small></p>
+            </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+    </body>
+</html>
