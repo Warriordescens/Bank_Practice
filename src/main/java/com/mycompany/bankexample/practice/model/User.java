@@ -26,6 +26,13 @@ public class User {
         this.surname = surname;
         accounts = new ArrayList<>();
     }
+    
+    public User(String nif, String name, String surname) {
+        this.nif = nif;
+        this.name = name;
+        this.surname = surname;
+        accounts = new ArrayList<>();
+    }
 
     public String getNif() {
         return nif;

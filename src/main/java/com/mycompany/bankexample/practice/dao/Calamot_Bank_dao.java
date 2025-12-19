@@ -41,6 +41,25 @@ public class Calamot_Bank_dao {
         desconectar(c);
         return existe;
     }
+     
+     public User login(String nif, String pass) throws SQLException, ClassNotFoundException, BankException {
+         User u = null;
+         Connection c = conectar();
+         try (Statement st = c.createStatement()) {
+             ResultSet rs = st.executeQuery("select * from user where nif = '" + nif + "' and pass = '" + pass + "';");
+             if (rs.next()) {
+                 String name = rs.getString("name");
+                 String surname = rs.getString("surname");
+                 u = new User(nif, name, surname);
+             } else {
+                 throw new BankException("Usuari o contrasenya incorrectes.");
+             }
+             rs.close();
+         } finally {
+             desconectar(c);
+         }
+         return u;
+     }
     
     public void insertUser(User u) throws SQLException, ClassNotFoundException, BankException {  
         if (existUser(u)){   
