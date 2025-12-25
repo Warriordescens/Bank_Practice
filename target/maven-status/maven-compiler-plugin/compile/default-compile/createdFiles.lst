@@ -1,3 +1,4 @@
+com\mycompany\bankexample\practice\filter\AuthFilter.class
 com\mycompany\bankexample\practice\dao\Calamot_Bank_dao.class
 com\mycompany\bankexample\practice\controller\Login.class
 com\mycompany\bankexample\practice\controller\RegistreServlet.class

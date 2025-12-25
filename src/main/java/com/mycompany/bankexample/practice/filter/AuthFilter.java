@@ -42,7 +42,7 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
         
-        String uri = httpRequest.getRequestURI();
+        String uri = httpRequest.getRequestURI().toLowerCase();
         if (!uri.startsWith(httpRequest.getContextPath().toLowerCase() + "/login") && 
                 !uri.startsWith(httpRequest.getContextPath().toLowerCase() + "/") && 
                 !uri.startsWith(httpRequest.getContextPath().toLowerCase() + "/registre")) {
