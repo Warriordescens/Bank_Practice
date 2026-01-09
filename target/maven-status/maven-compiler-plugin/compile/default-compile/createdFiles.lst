@@ -1,6 +1,8 @@
+com\mycompany\bankexample\practice\controller\CrearCuentaServlet.class
 com\mycompany\bankexample\practice\filter\AuthFilter.class
 com\mycompany\bankexample\practice\dao\Calamot_Bank_dao.class
 com\mycompany\bankexample\practice\controller\Login.class
+com\mycompany\bankexample\practice\controller\LogoutServlet.class
 com\mycompany\bankexample\practice\controller\RegistreServlet.class
 com\mycompany\bankexample\practice\model\User.class
 com\mycompany\bankexample\practice\exceptions\BankException.class

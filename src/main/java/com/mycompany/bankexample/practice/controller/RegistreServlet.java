@@ -5,7 +5,7 @@
 package com.mycompany.bankexample.practice.controller;
 
 import com.google.gson.Gson;
-import com.mycompany.bankexample.practice.dao.Calamot_Bank_dao;
+import com.mycompany.bankexample.practice.dao.CalamotBankDAO;
 import com.mycompany.bankexample.practice.exceptions.BankException;
 import com.mycompany.bankexample.practice.model.AnswerTO;
 import com.mycompany.bankexample.practice.model.User;
@@ -69,7 +69,7 @@ public class RegistreServlet extends HttpServlet {
                     answer.setMessage("les contrasenyes son diferents!!");
                 } else {
                     User u = new User(nif, pass1, name, surname);
-                    Calamot_Bank_dao.getInstance().insertUser(u);
+                    CalamotBankDAO.getInstance().insertUser(u);
                     answer.setStatus("OK");
                     answer.setMessage("Usuari registrat.");
                 }

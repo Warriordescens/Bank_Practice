@@ -66,7 +66,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li>
-                            <a class="dropdown-item" href="CrearCuentaServlet">
+                            <a class="dropdown-item" href="CrearCuenta.jsp">
                                 <i class="bi bi-plus-circle me-2"></i>Crear cuenta
                             </a>
                         </li>
@@ -92,7 +92,7 @@
         <div class="container text-center">
             <div class="card shadow border-0 p-5 mx-auto" style="max-width: 600px;">
                 <h3 class="mb-4">Acceso Rápido</h3>
-                <a href="CrearCuentaServlet" class="btn btn-success btn-lg px-5 py-3 fw-bold">
+                <a href="CrearCuenta.jsp" class="btn btn-success btn-lg px-5 py-3 fw-bold">
                     <i class="bi bi-plus-circle-fill me-2"></i> Crear Cuenta del Banco
                 </a>
                 <p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>

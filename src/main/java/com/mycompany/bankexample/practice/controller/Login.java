@@ -4,7 +4,7 @@
  */
 package com.mycompany.bankexample.practice.controller;
 
-import com.mycompany.bankexample.practice.dao.Calamot_Bank_dao;
+import com.mycompany.bankexample.practice.dao.CalamotBankDAO;
 import com.mycompany.bankexample.practice.exceptions.BankException;
 import com.mycompany.bankexample.practice.model.User;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
         try {
             String nif = request.getParameter("nif");
             String pass = request.getParameter("password");
-            User u = Calamot_Bank_dao.getInstance().login(nif, pass);
+            User u = CalamotBankDAO.getInstance().login(nif, pass);
             HttpSession session = request.getSession();
             session.setAttribute("usuari", u);
             response.sendRedirect("welcome.jsp");

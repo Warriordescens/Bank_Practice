@@ -42,10 +42,10 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
         
-        String uri = httpRequest.getRequestURI().toLowerCase();
-        if (!uri.startsWith(httpRequest.getContextPath().toLowerCase() + "/login") && 
-                !uri.startsWith(httpRequest.getContextPath().toLowerCase() + "/") && 
-                !uri.startsWith(httpRequest.getContextPath().toLowerCase() + "/registre")) {
+        String uri = httpRequest.getRequestURI();
+        if (!uri.startsWith(httpRequest.getContextPath() + "/login") && !uri.startsWith(httpRequest.getContextPath() + "/Login") && 
+                !uri.equals(httpRequest.getContextPath() + "/") && 
+                !uri.startsWith(httpRequest.getContextPath() + "/Registre")) {
             if (session == null || session.getAttribute("usuari") == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
                 return;
