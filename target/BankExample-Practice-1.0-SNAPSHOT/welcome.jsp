@@ -70,6 +70,11 @@
                                 <i class="bi bi-plus-circle me-2"></i>Crear cuenta
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="CuentaTransfer">
+                                <i class="bi bi-plus-circle me-2"></i>Hacer transferencia
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="LogoutServlet">Cerrar Sesión</a></li>
                     </ul>
@@ -95,7 +100,11 @@
                 <a href="CrearCuenta.jsp" class="btn btn-success btn-lg px-5 py-3 fw-bold">
                     <i class="bi bi-plus-circle-fill me-2"></i> Crear Cuenta del Banco
                 </a>
-                <p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
+                <br/>
+                <a href="CuentaTransfer" class="btn btn-success btn-lg px-5 py-3 fw-bold">
+                    <i class="bi bi-plus-circle-fill me-2"></i> Hacer transferencia
+                </a>
+                <p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
             </div>
         </div>
     </section>

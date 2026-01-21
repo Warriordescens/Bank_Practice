@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -84,12 +86,13 @@ public class CalamotBankDAO {
             ps.setString(3, u.getName());
             ps.setString(4, u.getSurname());
             ps.executeUpdate();
+        } finally {
+            desconectar(c);
         }
-        desconectar(c);
     }
     
     
-    public void CreateAccount(Account a, User u) throws SQLException, ClassNotFoundException, BankException {  
+    public void createAccount(Account a, User u) throws SQLException, ClassNotFoundException, BankException {  
         if (existAccount(a)) {
             throw new BankException("Ya existeix un compte amb aquest id.");  
         }
@@ -100,16 +103,100 @@ public class CalamotBankDAO {
             ps.setDouble(3, a.getBalance());
             ps.setString(4, u.getNif());
             ps.executeUpdate();
+        } finally {
+            desconectar(c);
         }
-        desconectar(c);
     }
     
     
+    public List<Account> getAccountsWithBalance(User u) throws SQLException, ClassNotFoundException {  
+        List<Account> accounts = new ArrayList<>();
+        Connection c = conectar();
+        try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("select * from account where owner = '" + u.getNif() + "' and balance > 0;")) {
+            while (rs.next()) {
+                int num = rs.getInt("idaccount");
+                String nom = rs.getString("name");
+                double saldo = rs.getDouble("balance");
+                accounts.add(new Account(num, nom, saldo));
+            }
+        } finally {
+            desconectar(c);
+        }
+        return accounts;
+    }
     
     
+    public List<Account> getAccounts(User u) throws SQLException, ClassNotFoundException {  
+        List<Account> accounts = new ArrayList<>();
+        Connection c = conectar();
+        try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("select * from account where owner = '" + u.getNif() + "';")) {
+            while (rs.next()) {
+                int num = rs.getInt("idaccount");
+                String nom = rs.getString("name");
+                double saldo = rs.getDouble("balance");
+                accounts.add(new Account(num, nom, saldo));
+            }
+        } finally {
+            desconectar(c);
+        }
+        return accounts;
+    }
+    
+    public double selectSaldoById(int id) throws SQLException, ClassNotFoundException {
+        Connection c = conectar();
+        double saldo = 0;
+        try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("select balance from account where idaccount = " + id + ";");){
+            if (rs.next()) {
+                saldo = rs.getDouble("balance");
+            }
+        } finally {
+            desconectar(c);
+        }
+        return saldo;
+    }
+    
+    public void transfer(int origen, int desti, double importe) throws ClassNotFoundException, SQLException {
+        Connection c  = conectar();
+        //comprovar si tiene el dinero que se quiere tranferir
+        // Hacer una transaccion para que si una de las dos cuentas fallan no se siga haciendo
+        try {
+        c.setAutoCommit(false);
+        PreparedStatement ps = c.prepareStatement("update account set balance = balance - ? where idaccount = ?;");
+        ps.setDouble(1, importe);
+        ps.setInt(2, origen);
+        ps.executeUpdate();
+        
+        ps = c.prepareStatement("update account set balance = balance + ? where idaccount = ?;");
+        ps.setDouble(1, importe);
+        ps.setInt(2, desti);
+        ps.executeUpdate();
+        ps.close();
+        c.commit();
+        } catch (SQLException ex) {
+            c.rollback();
+        } finally {
+            c.setAutoCommit(true);
+            desconectar(c);
+        }
+        
+    }
     
     
-    
+    public List<Account> selectAccountsWithoutOne(int idAccount) throws SQLException, ClassNotFoundException {
+        List<Account> accounts = new ArrayList<>();
+        Connection c = conectar();
+        try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("select * from account where idaccount != '" + idAccount + "';")) {
+            while (rs.next()) {
+                int num = rs.getInt("idaccount");
+                String nom = rs.getString("name");
+                double saldo = rs.getDouble("balance");
+                accounts.add(new Account(num, nom, saldo));
+            }
+        } finally {
+            desconectar(c);
+        }
+        return accounts;
+    }
     
     
     

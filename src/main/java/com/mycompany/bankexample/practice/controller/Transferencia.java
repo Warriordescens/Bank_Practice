@@ -7,29 +7,23 @@ package com.mycompany.bankexample.practice.controller;
 import com.google.gson.Gson;
 import com.mycompany.bankexample.practice.dao.CalamotBankDAO;
 import com.mycompany.bankexample.practice.exceptions.BankException;
-import com.mycompany.bankexample.practice.model.Account;
 import com.mycompany.bankexample.practice.model.AnswerTO;
-import com.mycompany.bankexample.practice.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "CrearCuentaServlet", urlPatterns = {"/CrearCuentaServlet"})
-public class CrearCuentaServlet extends HttpServlet {
+@WebServlet(name = "Transferencia", urlPatterns = {"/Transferencia"})
+public class Transferencia extends HttpServlet {
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -54,35 +48,29 @@ public class CrearCuentaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int numCuenta = Integer.parseInt(request.getParameter("numCuenta"));
-        String nombre = request.getParameter("nombreCuenta");
-        double balance = Double.parseDouble(request.getParameter("balance"));
-        
-        AnswerTO answer = new AnswerTO("", "");
+        int origen = Integer.parseInt(request.getParameter("origen"));
+        int desti = Integer.parseInt(request.getParameter("desti"));
+        double importe = Double.parseDouble(request.getParameter("importe"));
         Gson gson = new Gson();
-        
+        AnswerTO answer = new AnswerTO("", "");
         try {
-            HttpSession session = request.getSession();
-            User usuari = (User) session.getAttribute("usuari");
-
-            Account a = new Account(numCuenta, nombre, balance);
-
-            CalamotBankDAO.getInstance().createAccount(a, usuari);
+            double saldo = CalamotBankDAO.getInstance().selectSaldoById(origen);
+            if (saldo < importe) {
+                throw new BankException("No tens suficient diners per a fer la transferència demanada.");
+            }
+            CalamotBankDAO.getInstance().transfer(origen, desti, importe);
             answer.setStatus("OK");
-            answer.setMessage("Cuenta creada correctamente.");
-            
+            answer.setMessage("Transferència realitzada.");
         } catch (SQLException | ClassNotFoundException | BankException ex) {
             answer.setStatus("ERROR");
             answer.setMessage(ex.getMessage());
         }
-        
         String answerJson = gson.toJson(answer);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(answerJson);
         out.flush();
-        
     }
 
     /**
@@ -92,7 +80,7 @@ public class CrearCuentaServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Servlet para recoger datos de crear cuenta.";
+        return "Servlet para hacer la transferencia en si.";
     }// </editor-fold>
 
 }
