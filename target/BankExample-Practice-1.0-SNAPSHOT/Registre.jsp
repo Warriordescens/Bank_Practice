@@ -5,11 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Página de registre</title>
+        <title><fmt:message key="title.Registre" /></title>
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -28,6 +29,23 @@
         
     </head>
     <body class="d-flex align-items-center py-4 bg-bank min-vh-100">
+        
+        <div class="d-flex justify-content-end p-2 gap-2">
+            <!-- Enllaç per al Català -->
+            <!-- 1. Canviem href a 'ca' (sense _ES) -->
+            <a href="?lang=ca" 
+               title="Canviar a Català" 
+               class="btn btn-sm d-flex align-items-center ${sessionScope.currentLocale.language == 'ca' ? 'btn-primary' : 'btn-outline-secondary opacity-75'}">
+                <i class="bi bi-translate me-1"></i> CA
+            </a>
+
+            <!-- Enllaç per al Castellà -->
+            <a href="?lang=es" 
+               title="Cambiar a Español" 
+               class="btn btn-sm d-flex align-items-center ${sessionScope.currentLocale.language == 'es' ? 'btn-primary' : 'btn-outline-secondary opacity-75'}">
+                <i class="bi bi-translate me-1"></i> ES
+            </a>
+        </div>
         
         <main class="form-registration p-4 p-md-5 bg-white shadow-lg rounded-3">
 
