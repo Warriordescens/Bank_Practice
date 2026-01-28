@@ -18,7 +18,7 @@ public class AppConfigListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
-        context.setInitParameter("javax.servlet.jsp.jstl.fmt.localizationContext", "com.mycompany.bankexemple.practice.i18n.message");
+        context.setInitParameter("javax.servlet.jsp.jstl.fmt.localizationContext", "com.mycompany.bankexample.practice.i18n.messages");
     }
 
     @Override

@@ -51,7 +51,7 @@
 
                 <div class="text-center mb-4">
                     <i class="bi bi-person-vcard-fill display-4 text-success mb-2" aria-hidden="true"></i>
-                    <h1 class="h3 mb-3 fw-normal">Registro Calamot Bank</h1>
+                    <h1 class="h3 mb-3 fw-normal"><fmt:message key="h1.Registre" /></h1>
                 </div>
 
                 <div class="form-floating mb-3">
