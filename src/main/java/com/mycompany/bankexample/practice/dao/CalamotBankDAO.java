@@ -77,7 +77,7 @@ public class CalamotBankDAO {
     
     public void insertUser(User u) throws SQLException, ClassNotFoundException, BankException {  
         if (existUser(u)){   
-            throw new BankException("Ya existeix un usuari amb aquest nif");   
+            throw new BankException("user.dao.duplicate");   
         }
         Connection c = conectar();
         try (PreparedStatement ps = c.prepareStatement("insert into user values (?, ?, ?, ?);")) { 

@@ -13,12 +13,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -51,6 +54,11 @@ public class RegistreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        Locale userLocale = (Locale) session.getAttribute("currentLocale");
+        ResourceBundle traduccion = ResourceBundle.getBundle("com.mycompany.bankexample.practice.i18n.messages", userLocale);
+        
         String status = "ok";
         String nif = request.getParameter("nif");
         String name = request.getParameter("name");
@@ -62,25 +70,27 @@ public class RegistreServlet extends HttpServlet {
         Gson gson = new Gson();
         try {
             if (nif != null && !validateNif(nif)) {
-                throw new BankException("Nif incorrecto");
+                throw new BankException(traduccion.getString("registre.error"));
             } else {
                 if (!pass1.equals(pass2)) {
                     answer.setStatus("ERROR");
-                    answer.setMessage("les contrasenyes son diferents!!");
+                    answer.setMessage(traduccion.getString("registre.pass2"));
                 } else {
                     User u = new User(nif, pass1, name, surname);
                     CalamotBankDAO.getInstance().insertUser(u);
                     answer.setStatus("OK");
-                    answer.setMessage("Usuari registrat.");
+                    answer.setMessage(traduccion.getString("registre.ok"));
                 }
             }
         } catch(BankException | SQLException | ClassNotFoundException ex) {
             answer.setStatus("ERROR");
-            answer.setMessage(ex.getMessage());
+            if (traduccion.containsKey(ex.getMessage())) {
+                answer.setMessage(traduccion.getString(ex.getMessage()));
+            } else {
+                answer.setMessage("Error inesperado: " + ex.getMessage());
+            }
         }
         
-//        request.setAttribute("status", status);
-//        request.getRequestDispatcher("/Registre.jsp").forward(request, response);
 
         String answerJson = gson.toJson(answer);
         response.setContentType("application/json");
